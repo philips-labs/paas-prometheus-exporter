@@ -54,6 +54,8 @@ Refer to the [PaaS Technical Documentation](https://docs.cloud.service.gov.uk/mo
 |API endpoint|api-endpoint|API_ENDPOINT||
 |Username|username|USERNAME||
 |Password|password|PASSWORD||
+|CloudFoundry Organization|orgs|ORGS|Discover all cf-apps and services in defined Organizations separated by comma|
+|CloudFoundry Spaces|spaces|SPACES|Discover all cf-apps and services in defined Spaces separated by comma|
 
 ### Additional options
 
