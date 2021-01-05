@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"log"
 	"net/http"
@@ -61,6 +62,7 @@ func main() {
 	kingpin.Parse()
 	os.Setenv("ENV_ORGS", *orgs)
 	os.Setenv("ENV_SPACES", *spaces)
+
 	if *logCacheEndpoint == "" {
 		*logCacheEndpoint = strings.Replace(*apiEndpoint, "api.", "log-cache.", 1)
 	}
@@ -104,10 +106,19 @@ func main() {
 		appName,
 	)
 
+	decodedUsername, err := base64.StdEncoding.DecodeString(*username)
+	if err != nil {
+		log.Fatal("Could not decode the USERNAME environment variable")
+	}
+	decodedPassword, err := base64.StdEncoding.DecodeString(*password)
+	if err != nil {
+		log.Fatal("Could not decode the PASSWORD environment variable")
+	}
+
 	config := &cfclient.Config{
 		ApiAddress:   *apiEndpoint,
-		Username:     *username,
-		Password:     *password,
+		Username:     string(decodedUsername),
+		Password:     string(decodedPassword),
 		ClientID:     *clientID,
 		ClientSecret: *clientSecret,
 		UserAgent:    userAgent,
